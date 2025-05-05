@@ -45,6 +45,13 @@ public class StudentController : Controller
         return Unauthorized();
     }
     
+    [HttpGet]
+    public IActionResult Register()
+    {
+        return View();
+    }
+
+    
     public IActionResult Announces()
     {
         ViewData["ActivePage"] = "Announces";
