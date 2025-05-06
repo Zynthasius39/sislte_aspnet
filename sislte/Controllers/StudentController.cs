@@ -7,14 +7,9 @@ using Microsoft.IdentityModel.Tokens;
 using sislte;
 using sislte.Models;
 
+[Route("student")]
 public class StudentController : Controller
 {
-    [HttpGet]
-    public IActionResult Login()
-    {
-        return View();
-    }
-
     [HttpPost]
     public IActionResult Login(Login login)
     {
@@ -44,12 +39,6 @@ public class StudentController : Controller
         }
 
         return Unauthorized();
-    }
-
-    [HttpGet]
-    public IActionResult Register()
-    {
-        return View();
     }
 
     [HttpPost]
@@ -88,39 +77,4 @@ public class StudentController : Controller
         });
     }
 
-    public IActionResult Announces()
-    {
-        ViewData["ActivePage"] = "Announces";
-        return View();
-    }
-
-    public IActionResult Attendance()
-    {
-        ViewData["ActivePage"] = "Attendance";
-        return View();
-    }
-
-    public IActionResult Departments()
-    {
-        ViewData["ActivePage"] = "Departments";
-        return View();
-    }
-
-    public IActionResult Courses()
-    {
-        ViewData["ActivePage"] = "Courses";
-        return View();
-    }
-
-    public IActionResult Grades()
-    {
-        ViewData["ActivePage"] = "Grades";
-        return View();
-    }
-
-    public IActionResult Transcript()
-    {
-        ViewData["ActivePage"] = "Transcript";
-        return View();
-    }
 }
