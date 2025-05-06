@@ -70,8 +70,8 @@
                 <form asp-controller="Student" asp-action="Register" method="POST">
                     <div class="mb-3">
                         <label class="form-label">E-Mail</label>
-                        <input asp-for="StudentID" type="text" inputmode="email" class="form-control" name="Email" placeholder="ypiriyev@std.beu.edu.az" />
-                        <span asp-validation-for="StudentID" class="text-danger"></span>
+                        <input asp-for="Email" type="text" inputmode="email" class="form-control" name="Email" placeholder="ypiriyev@std.beu.edu.az" />
+                        <span asp-validation-for="Email" class="text-danger"></span>
                     </div>
                     <div class="mb-3">
                         <label class="form-label">Password</label>
@@ -80,7 +80,7 @@
                     </div>
                     <div class="mb-3">
                         <label class="form-label">Confirm Password</label>
-                        <input asp-for="ConfirmPassword" type="password" class="form-control" id="ConfirmPassword" name="Password" placeholder="Repeat your password" />
+                        <input asp-for="ConfirmPassword" type="password" class="form-control" id="ConfirmPassword" name="ConfirmPassword" placeholder="Repeat your password" />
                         <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
                     </div>
                     <div class="d-grid">
