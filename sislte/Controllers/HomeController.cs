@@ -9,7 +9,7 @@ public class HomeController : Controller
         ViewBag.GPA = 3.74;
         ViewBag.Courses = 30;
         ViewBag.Friends = 68;
-        ViewBag.AvatarURL = "assets/img/studphoto.jpg";
+        ViewBag.AvatarURL = "/assets/img/studphoto.jpg";
         ViewBag.DetailedInfo = new List<DetailedInfo>();
         ViewBag.DetailedInfo.Add(new DetailedInfo()
         {

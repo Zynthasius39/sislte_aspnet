@@ -2,7 +2,7 @@
   <div class="container-fluid">
     <div class="row mb-2">
       <div class="col-sm-6">
-        <h1>Courses</h1>
+        <h1>Programs</h1>
       </div>
     </div>
     <!--begin::Row-->
@@ -35,13 +35,12 @@
             </tr>
             </thead>
             <tbody>
-            @foreach (var course in @ViewBag.Courses)
+            @foreach (var program in @ViewBag.Programs)
             {
               <tr>
-                <td>@course.Code</td>
-                <td>@course.Name</td>
-                <td>@course.Type</td>
-                <td>@course.Ects</td>
+                <td>@program.Code</td>
+                <td>@program.Name</td>
+                <td>@program.Prefix</td>
               </tr>
             }
             </tbody>

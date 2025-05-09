@@ -77,7 +77,7 @@ public class StudentController : Controller
             .SelectMany(ms => ms.Value.Errors)
             .Select(e => e.ErrorMessage)
             .ToList();
-        
+
         return Ok(new
         {
             email = register.Email,
@@ -91,6 +91,15 @@ public class StudentController : Controller
     public IActionResult Announces()
     {
         ViewData["ActivePage"] = "Announces";
+        ViewBag.Announces = new List<Announce>();
+        ViewBag.Announces.Add(
+            new Announce()
+            {
+                Title = "Tələbələrin nəzərinə: 8000-dən çox beynəlxalq təlimə ödənişsiz qoşulmaq fürsətini qaçırmayın!",
+                Message = "İqtisadiyyat Nazirliyinin tabeliyində Dördüncü Sənaye İnqilabının Təhlili və Koordinasiya Mərkəzi (4SİM), Elm və Təhsil Nazirliyinin tabeliyində Təhsilin İnkişafı Fondu və ABŞ-nin “Coursera” şirkətinin birgə əməkdaşlığı ilə “4Sİ Akadeniyası-Milli Proqram”a qeydiyyat davam edir. Proqram 1 il ərzində on minlərlə istifadəçinin dünyanın ən böyük onlayn tədris platforması olan “Coursera”da təlimlərdən ödənişsiz faydalanmaq üçün əvəzolunmaz fürsətdir. https://form.4sim.gov.az/ linkinə daxil olub qeydiyyatdan keçərək bu imkandan yararlana bilərsiniz.",
+                Date = DateOnly.FromDateTime(DateTime.Now)
+            }
+        );
         return View();
     }
 
@@ -100,15 +109,30 @@ public class StudentController : Controller
         return View();
     }
 
-    public IActionResult Departments()
+    public IActionResult Programs()
     {
-        ViewData["ActivePage"] = "Departments";
+        ViewData["ActivePage"] = "Programs";
+        ViewBag.Programs = new List<CProgram>();
+        ViewBag.Programs.Add(new CProgram()
+        {
+            Code = "DEP_IT_PROG",
+            Name = "Information technologies and programming",
+            Prefix = "ICT, IT, ITS, MIS, SAI, IT, İİS"
+        });
         return View();
     }
 
     public IActionResult Courses()
     {
         ViewData["ActivePage"] = "Courses";
+        ViewBag.Courses = new List<Course>();
+        ViewBag.Courses.Add(new Course()
+        {
+            Code = "IT113",
+            Name = "Information management",
+            Type = "def",
+            Ects = 3
+        });
         return View();
     }
 
@@ -123,4 +147,26 @@ public class StudentController : Controller
         ViewData["ActivePage"] = "Transcript";
         return View();
     }
+}
+
+internal record Announce
+{
+    public required string Title { get; set; }
+    public required string Message { get; set; }
+    public required DateOnly Date { get; set; }
+}
+
+internal record CProgram
+{
+    public required string Code { get; set; }
+    public required string Name { get; set; }
+    public required string Prefix { get; set; }
+}
+
+internal record Course
+{
+    public required string Code { get; set; }
+    public required string Name { get; set; }
+    public required string Type { get; set; }
+    public required int Ects { get; set; }
 }

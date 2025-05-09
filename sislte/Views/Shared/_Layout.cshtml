@@ -42,9 +42,9 @@
     />
     <!--end::Third Party Plugin(Bootstrap Icons)-->
     <!--begin::Required Plugin(AdminLTE)-->
-    <link rel="stylesheet" href="css/misc.css"/>
-    <link rel="stylesheet" href="css/adminlte.css"/>
-    <link rel="stylesheet" href="css/adminlte.rtl.css"/>
+    <link rel="stylesheet" href="/css/misc.css"/>
+    <link rel="stylesheet" href="/css/adminlte.css"/>
+    <link rel="stylesheet" href="/css/adminlte.rtl.css"/>
     <!--end::Required Plugin(AdminLTE)-->
     <!-- apexcharts -->
     <link
@@ -94,7 +94,7 @@
                 <li class="nav-item dropdown">
                     <a class="nav-link" data-bs-toggle="dropdown" href="#">
                         <i class="bi bi-chat-text"></i>
-                        <span class="navbar-badge badge text-bg-danger">3</span>
+                        @* <span class="navbar-badge badge text-bg-danger">3</span> *@
                     </a>
                     <div class="dropdown-menu dropdown-menu-lg dropdown-menu-end">
                         <a href="#" class="dropdown-item">
@@ -102,7 +102,7 @@
                             <div class="d-flex">
                                 <div class="flex-shrink-0">
                                     <img
-                                        src="~/assets/img/studphoto.jpg"
+                                        src="/assets/img/studphoto.jpg"
                                         alt="User Avatar"
                                         class="img-size-50 rounded-circle me-3"
                                     />
@@ -183,7 +183,7 @@
                 <li class="nav-item dropdown">
                     <a class="nav-link" data-bs-toggle="dropdown" href="#">
                         <i class="bi bi-bell-fill"></i>
-                        <span class="navbar-badge badge text-bg-warning">15</span>
+                        @* <span class="navbar-badge badge text-bg-warning">15</span> *@
                     </a>
                     <div class="dropdown-menu dropdown-menu-lg dropdown-menu-end">
                         <span class="dropdown-item dropdown-header">15 Notifications</span>
@@ -308,9 +308,9 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="~/Student/Departments" class="nav-link @(ViewData["ActivePage"]?.ToString() == "Departments" ? "active" : "")">
+                        <a href="~/Student/Programs" class="nav-link @(ViewData["ActivePage"]?.ToString() == "Programs" ? "active" : "")">
                             <i class="nav-icon bi bi-building"></i>
-                            <p>Departments</p>
+                            <p>Programs</p>
                         </a>
                     </li>
                     <li class="nav-item">
@@ -352,7 +352,7 @@
     <!--begin::Footer-->
     <footer class="app-footer">
         <!--begin::To the end-->
-        <div class="float-end d-none d-sm-inline">Anything you want</div>
+        <div class="float-end d-none d-sm-inline">2025</div>
         <!--end::To the end-->
     </footer>
     <!--end::Footer-->
