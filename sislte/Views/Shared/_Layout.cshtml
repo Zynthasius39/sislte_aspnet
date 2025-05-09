@@ -77,18 +77,18 @@
                         <i class="bi bi-list"></i>
                     </a>
                 </li>
-                <li class="nav-item d-none d-md-block"><a href="#" class="nav-link">Home</a></li>
-                <li class="nav-item d-none d-md-block"><a href="#" class="nav-link">Help</a></li>
+                <li class="nav-item d-none d-md-block"><a href="/" class="nav-link">Home</a></li>
+                <li class="nav-item d-none d-md-block"><a href="/Home/Contact" class="nav-link">Contact</a></li>
             </ul>
             <!--end::Start Navbar Links-->
             <!--begin::End Navbar Links-->
             <ul class="navbar-nav">
                 <!--begin::Navbar Search-->
-                <li class="nav-item">
-                    <a class="nav-link" data-widget="navbar-search" href="#" role="button">
-                        <i class="bi bi-search"></i>
-                    </a>
-                </li>
+                @* <li class="nav-item"> *@
+                @*     <a class="nav-link" data-widget="navbar-search" href="#" role="button"> *@
+                @*         <i class="bi bi-search"></i> *@
+                @*     </a> *@
+                @* </li> *@
                 <!--end::Navbar Search-->
                 <!--begin::Messages Dropdown Menu-->
                 <li class="nav-item dropdown">
@@ -217,14 +217,16 @@
                 <!--end::Fullscreen Toggle-->
                 <!--begin::User Menu Dropdown-->
                 <li class="nav-item dropdown user-menu">
-                    <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
+                    <div class="nav-link">
+                        @* <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"> *@
                         <img
                             src="~/assets/img/studphoto.jpg"
                             class="user-image rounded-circle shadow"
                             alt="User Image"
                         />
                         <span class="d-none d-md-inline">Sekiro</span>
-                    </a>
+                    </div>
+                    @* </a> *@
                     <ul class="dropdown-menu dropdown-menu-lg dropdown-menu-end">
                         <!--begin::User Image-->
                         <li class="user-header text-bg-primary">
@@ -296,43 +298,50 @@
                     data-accordion="false"
                 >
                     <li class="nav-item">
-                        <a href="~/Home/Index" class="nav-link @(ViewData["ActivePage"]?.ToString() == "Index" ? "active" : "")">
+                        <a href="~/Home/Index"
+                           class="nav-link @(ViewData["ActivePage"]?.ToString() == "Index" ? "active" : "")">
                             <i class="nav-icon bi bi-speedometer"></i>
                             <p>Dashboard</p>
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="~/Student/Announces" class="nav-link @(ViewData["ActivePage"]?.ToString() == "Announces" ? "active" : "")">
+                        <a href="~/Student/Announces"
+                           class="nav-link @(ViewData["ActivePage"]?.ToString() == "Announces" ? "active" : "")">
                             <i class="nav-icon bi bi-megaphone"></i>
                             <p>Announces</p>
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="~/Student/Programs" class="nav-link @(ViewData["ActivePage"]?.ToString() == "Programs" ? "active" : "")">
+                        <a href="~/Student/Programs"
+                           class="nav-link @(ViewData["ActivePage"]?.ToString() == "Programs" ? "active" : "")">
                             <i class="nav-icon bi bi-building"></i>
                             <p>Programs</p>
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="~/Student/Courses" class="nav-link @(ViewData["ActivePage"]?.ToString() == "Courses" ? "active" : "")">
+                        <a href="~/Student/Courses"
+                           class="nav-link @(ViewData["ActivePage"]?.ToString() == "Courses" ? "active" : "")">
                             <i class="nav-icon bi bi-table"></i>
                             <p>Courses</p>
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="~/Student/Grades" class="nav-link @(ViewData["ActivePage"]?.ToString() == "Grades" ? "active" : "")">
+                        <a href="~/Student/Grades"
+                           class="nav-link @(ViewData["ActivePage"]?.ToString() == "Grades" ? "active" : "")">
                             <i class="nav-icon bi bi-star-fill"></i>
                             <p>Grades</p>
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="~/Student/Transcript" class="nav-link @(ViewData["ActivePage"]?.ToString() == "Transcript" ? "active" : "")">
+                        <a href="~/Student/Transcript"
+                           class="nav-link @(ViewData["ActivePage"]?.ToString() == "Transcript" ? "active" : "")">
                             <i class="nav-icon bi bi-file-earmark-text-fill"></i>
                             <p>Transcript</p>
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="~/Student/Attendance" class="nav-link @(ViewData["ActivePage"]?.ToString() == "Attendance" ? "active" : "")">
+                        <a href="~/Student/Attendance"
+                           class="nav-link @(ViewData["ActivePage"]?.ToString() == "Attendance" ? "active" : "")">
                             <i class="nav-icon bi bi-check2-square"></i>
                             <p>Attendance</p>
                         </a>
