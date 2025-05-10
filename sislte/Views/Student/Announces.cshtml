@@ -9,15 +9,15 @@
     </div>
     <!--begin::Row-->
     <div class="row">
-      @foreach (Announce Announce in @ViewBag.Announces)
+      @foreach (var announce in @ViewBag.Announces)
       {
         <div class="card mb-3 shadow-sm border-0">
           <div class="card-body">
-            <b>@Announce.Title</b>
+            <b>@announce.Title</b>
             <br/>
-            <p>@Announce.Message</p>
+            <p>@announce.Message</p>
             <p class="text-muted small mb-0">
-              <i class="bi bi-calendar-event me-1"></i>@Announce.Date.ToLongDateString()
+              <i class="bi bi-calendar-event me-1"></i>@announce.Date.ToLongDateString()
               @* <span class="badge bg-success ms-2">New</span> *@
             </p>
           </div>

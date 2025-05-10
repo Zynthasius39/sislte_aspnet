@@ -5,11 +5,11 @@
             <div class="row mb-4">
                 <div class="col-6">
                     <h4 class="mb-0">University Name</h4>
-                    <p class="text-muted">Official Transcript</p>
+                    <p class="text-muted">Baku Engineering University</p>
                 </div>
                 <div class="col-6 text-end">
                     <h5>Student Transcript</h5>
-                    <p class="text-muted">Date: <span id="date"></span></p>
+                    <p class="text-muted">Date: @DateOnly.FromDateTime(DateTime.Now)<span id="date"></span></p>
                 </div>
             </div>
 
@@ -17,60 +17,50 @@
             <div class="row mb-4">
                 <div class="col-sm-6">
                     <h6 class="fw-bold">Student Details</h6>
-                    <p>Name: John Doe</p>
-                    <p>Student ID: 12345678</p>
-                    <p>Program: Computer Science</p>
+                    <p>Name: @ViewBag.FullName</p>
+                    <p>Student ID: @ViewBag.StudentId</p>
+                    <p>Program: @ViewBag.Program</p>
                 </div>
                 <div class="col-sm-6">
                     <h6 class="fw-bold">Contact Info</h6>
-                    <p>Email: john.doe@example.com</p>
-                    <p>Phone: (555) 123-4567</p>
+                    <p>Email: @ViewBag.Email</p>
+                    <p>Phone: @ViewBag.Phone</p>
                 </div>
             </div>
 
             <!-- Table Section for Courses and Grades -->
             <h6 class="fw-bold mb-3">Course Details</h6>
-            <table class="table table-bordered table-striped">
-                <thead>
-                <tr>
-                    <th scope="col">Course Code</th>
-                    <th scope="col">Course Name</th>
-                    <th scope="col">Credits</th>
-                    <th scope="col">Grade</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr>
-                    <td>CS101</td>
-                    <td>Introduction to Programming</td>
-                    <td>3</td>
-                    <td>A</td>
-                </tr>
-                <tr>
-                    <td>CS201</td>
-                    <td>Data Structures</td>
-                    <td>3</td>
-                    <td>B+</td>
-                </tr>
-                <tr>
-                    <td>CS301</td>
-                    <td>Algorithms</td>
-                    <td>3</td>
-                    <td>A-</td>
-                </tr>
-                <tr>
-                    <td>CS401</td>
-                    <td>Operating Systems</td>
-                    <td>3</td>
-                    <td>B</td>
-                </tr>
-                </tbody>
-            </table>
-
+            @foreach (var semester in @ViewBag.Transcript.Semesters)
+            {
+                <div class="card-body table-bordered table-stripped">
+                    <table class="table table-hover text-nowrap">
+                        <thead>
+                        <tr>
+                            <th>Course Code</th>
+                            <th>Name</th>
+                            <th>Theory</th>
+                            <th>ECTS</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        @foreach (var course in semester.Courses)
+                        {
+                            <tr>
+                                <td>@course.Code</td>
+                                <td>@course.Name</td>
+                                <td>@course.Theory</td>
+                                <td>@course.Ects</td>
+                            </tr>
+                        }
+                        </tbody>
+                    </table>
+                    <p><strong>SPA: </strong>@semester.Spa</p>
+                </div>
+            }
             <!-- Footer Section -->
             <div class="d-flex justify-content-between">
-                <p><strong>Total Credits:</strong> 12</p>
-                <p><strong>GPA:</strong> 3.5</p>
+                <p><strong>Total Credits:</strong> @ViewBag.Transcript.Tacc</p>
+                <p><strong>GPA:</strong> @ViewBag.Transcript.Gpa</p>
             </div>
         </div>
     </div>
