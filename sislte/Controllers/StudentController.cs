@@ -52,6 +52,18 @@ public class StudentController : Controller
         return View();
     }
 
+    [HttpGet]
+    public IActionResult Reset()
+    {
+        return View();
+    }
+
+    [HttpPost]
+    public IActionResult Reset(ResetForm rf)
+    {
+        return View("ResetPost");
+    }
+
     [HttpPost]
     public IActionResult Register(Register register)
     {

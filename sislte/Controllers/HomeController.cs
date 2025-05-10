@@ -1,4 +1,6 @@
+using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
+using sislte.Models;
 
 public class HomeController : Controller
 {
@@ -25,7 +27,22 @@ public class HomeController : Controller
         };
         return View();
     }
-    
+
+    [HttpGet]
+    public IActionResult Contact()
+    {
+        ViewData["ActivePage"] = "Contact";
+        ViewBag.ContactEmail = "support@beu.edu.az";
+        ViewBag.ContactPhone = "+994 12 1212242";
+        ViewBag.ContactAddress = "Khirdalan, Baku Engineering University";
+        return View();
+    }
+
+    [HttpPost]
+    public IActionResult Contact(ContactForm model)
+    {
+        return Redirect("https://alakx.com");
+    }
 }
 
 internal record DetailedInfo
