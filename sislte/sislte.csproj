@@ -145,6 +145,41 @@
       <_ContentIncludedByDefault Remove="wwwroot\ts\treeview.ts" />
       <_ContentIncludedByDefault Remove="wwwroot\ts\util\index.ts" />
       <_ContentIncludedByDefault Remove="wwwroot\utils\index.js" />
+      <_ContentIncludedByDefault Remove="wwwroot\css\style.css" />
+      <_ContentIncludedByDefault Remove="wwwroot\pages\docs\browser-support.html" />
+      <_ContentIncludedByDefault Remove="wwwroot\pages\docs\color-mode.html" />
+      <_ContentIncludedByDefault Remove="wwwroot\pages\docs\components\main-header.html" />
+      <_ContentIncludedByDefault Remove="wwwroot\pages\docs\components\main-sidebar.html" />
+      <_ContentIncludedByDefault Remove="wwwroot\pages\docs\faq.html" />
+      <_ContentIncludedByDefault Remove="wwwroot\pages\docs\how-to-contribute.html" />
+      <_ContentIncludedByDefault Remove="wwwroot\pages\docs\introduction.html" />
+      <_ContentIncludedByDefault Remove="wwwroot\pages\docs\javascript\treeview.html" />
+      <_ContentIncludedByDefault Remove="wwwroot\pages\docs\layout.html" />
+      <_ContentIncludedByDefault Remove="wwwroot\pages\docs\license.html" />
+      <_ContentIncludedByDefault Remove="wwwroot\pages\examples\lockscreen.html" />
+      <_ContentIncludedByDefault Remove="wwwroot\pages\examples\login-v2.html" />
+      <_ContentIncludedByDefault Remove="wwwroot\pages\examples\login.html" />
+      <_ContentIncludedByDefault Remove="wwwroot\pages\examples\register-v2.html" />
+      <_ContentIncludedByDefault Remove="wwwroot\pages\examples\register.html" />
+      <_ContentIncludedByDefault Remove="wwwroot\pages\forms\general.html" />
+      <_ContentIncludedByDefault Remove="wwwroot\pages\generate\theme.html" />
+      <_ContentIncludedByDefault Remove="wwwroot\pages\index.html" />
+      <_ContentIncludedByDefault Remove="wwwroot\pages\index2.html" />
+      <_ContentIncludedByDefault Remove="wwwroot\pages\index3.html" />
+      <_ContentIncludedByDefault Remove="wwwroot\pages\layout\collapsed-sidebar.html" />
+      <_ContentIncludedByDefault Remove="wwwroot\pages\layout\fixed-sidebar.html" />
+      <_ContentIncludedByDefault Remove="wwwroot\pages\layout\layout-custom-area.html" />
+      <_ContentIncludedByDefault Remove="wwwroot\pages\layout\layout-rtl.html" />
+      <_ContentIncludedByDefault Remove="wwwroot\pages\layout\logo-switch.html" />
+      <_ContentIncludedByDefault Remove="wwwroot\pages\layout\sidebar-mini.html" />
+      <_ContentIncludedByDefault Remove="wwwroot\pages\layout\unfixed-sidebar.html" />
+      <_ContentIncludedByDefault Remove="wwwroot\pages\tables\simple.html" />
+      <_ContentIncludedByDefault Remove="wwwroot\pages\UI\general.html" />
+      <_ContentIncludedByDefault Remove="wwwroot\pages\UI\icons.html" />
+      <_ContentIncludedByDefault Remove="wwwroot\pages\UI\timeline.html" />
+      <_ContentIncludedByDefault Remove="wwwroot\pages\widgets\cards.html" />
+      <_ContentIncludedByDefault Remove="wwwroot\pages\widgets\info-box.html" />
+      <_ContentIncludedByDefault Remove="wwwroot\pages\widgets\small-box.html" />
     </ItemGroup>
 
     <ItemGroup>
