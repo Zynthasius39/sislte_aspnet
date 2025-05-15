@@ -1,7 +1,9 @@
 using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using sislte;
+using SisContext = sislte.Core.SisContext;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -11,6 +13,8 @@ JwtConfig.Key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configur
 JwtConfig.Issuer = jwtConfig["Issuer"];
 JwtConfig.Audience = jwtConfig["Audience"];
 
+builder.Services.AddDbContextPool<SisContext>(opt => 
+    NpgsqlDbContextOptionsBuilderExtensions.UseNpgsql(opt));
 builder.Services.AddControllersWithViews();
 builder.Services.AddAuthentication(options =>
     {
