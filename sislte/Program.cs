@@ -1,9 +1,13 @@
 using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
+using Npgsql;
 using sislte;
 
 var builder = WebApplication.CreateBuilder(args);
+
+var connectionString = "Host=localhost;Username=postgres;Password=1234;Database=postgres";
+await using var dataSource = NpgsqlDataSource.Create(connectionString);
 
 var jwtConfig = builder.Configuration.GetSection("JwtSettings");
 
@@ -11,6 +15,11 @@ JwtConfig.Key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configur
 JwtConfig.Issuer = jwtConfig["Issuer"];
 JwtConfig.Audience = jwtConfig["Audience"];
 
+<<<<<<< Updated upstream
+=======
+builder.Services.AddDbContextPool<SisContext>(opt =>
+    opt.UseNpgsql(builder.Configuration.GetConnectionString("SisContext")));
+>>>>>>> Stashed changes
 builder.Services.AddControllersWithViews();
 builder.Services.AddAuthentication(options =>
     {
