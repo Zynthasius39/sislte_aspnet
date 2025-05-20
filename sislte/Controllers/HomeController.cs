@@ -1,49 +1,20 @@
 using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using sislte.Models;
+using sislte.Repository;
+using sislte.ViewModels;
 
 public class HomeController : Controller
 {
+    private readonly IStudentRepository _studentRepository;
+    public HomeController(IStudentRepository studentRepository)
+    {
+        _studentRepository = studentRepository;
+    }
     public IActionResult Index()
     {
         ViewData["ActivePage"] = "Index";
-        ViewBag.FullName = "Sekiro";
-        ViewBag.GPA = 3.74;
-        ViewBag.Courses = 30;
-        ViewBag.Friends = 68;
-        ViewBag.AvatarURL = "/assets/img/studphoto.jpg";
-        ViewBag.DetailedInfo = new List<DetailedInfo>
-        {
-            new DetailedInfo("Full Name", "Jane Doe"),
-            new DetailedInfo("Student ID", "202312345"),
-            new DetailedInfo("Email", "jane.doe@example.edu"),
-            new DetailedInfo("Phone Number", "+1 (555) 123-4567"),
-            new DetailedInfo("Date of Birth", "2003-05-12"),
-            new DetailedInfo("Enrollment Status", "Active"),
-            new DetailedInfo("Program", "Bachelor of Science in Computer Science"),
-            new DetailedInfo("Year of Study", "3rd Year"),
-            new DetailedInfo("GPA", "3.75"),
-            new DetailedInfo("Credits Earned", "90"),
-            new DetailedInfo("Expected Graduation Date", "May 2026"),
-            new DetailedInfo("Advisor", "Dr. Alan Smith"),
-            new DetailedInfo("Loans", "Yes"),
-            new DetailedInfo("Scholarship Status", "Awarded (Merit-Based)"),
-            new DetailedInfo("Tuition Balance", "$1,500"),
-            new DetailedInfo("Courses Enrolled", "CS301: Algorithms, CS320: Web Development, MATH210: Linear Algebra, ENG205: Technical Writing"),
-            new DetailedInfo("Attendance Rate", "92%"),
-            new DetailedInfo("Library Fines", "$0"),
-            new DetailedInfo("Internship Placement", "In Progress"),
-            new DetailedInfo("Clubs Joined", "Women in Tech, Robotics Club"),
-            new DetailedInfo("Emergency Contact", "Mary Doe, +1 (555) 987-6543")
-        };
-        ViewBag.About = new About()
-        {
-            Education = "B.S. in Information Technologies from Baku Engineering University",
-            Location = "Sumgait, Azerbaijan",
-            Skills = "Cisco CCNA, Linux, Windows, Git",
-            Notes = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam fermentum enim neque."
-        };
-        return View();
+        return View(_studentRepository.Get());
     }
 
     [HttpGet]
@@ -60,6 +31,23 @@ public class HomeController : Controller
     public IActionResult Contact(ContactForm model)
     {
         return Redirect("https://alakx.com");
+    }
+    
+    [HttpGet]
+    public IActionResult EditAboutMe()
+    {
+        return View(_studentRepository.GetEditAboutMe());
+    }
+    
+    [HttpPost]
+    public IActionResult EditAboutMe(Student student)
+    {
+        StudentRepository.StudentExample.FullName = student.FullName;
+        StudentRepository.StudentExample.Location = student.Location;
+        StudentRepository.StudentExample.Education = student.FullName;
+        StudentRepository.StudentExample.Notes = student.Notes;
+        StudentRepository.StudentExample.Skills = student.Skills;
+        return RedirectToAction("Index");
     }
 }
 

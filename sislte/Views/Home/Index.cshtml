@@ -1,3 +1,5 @@
+@model sislte.ViewModels.StudentHomeViewModel;
+
 <div class="content-wrapper" style="min-height: 1604.8px;">
     <section class="content-header">
         <div class="container-fluid">
@@ -16,20 +18,20 @@
                         <div class="card-body box-profile">
                             <div class="text-center">
                                 <img class="profile-user-img img-fluid img-circle"
-                                     src="@ViewBag.AvatarURL"
+                                     src="@Model.Student.AvatarURL"
                                      alt="Student Profile Picture">
                             </div>
-                            <h3 class="profile-username text-center">@ViewBag.FullName</h3>
-                            <p class="text-muted text-center">@ViewBag.Program</p>
+                            <h3 class="profile-username text-center">@Model.Student.FullName</h3>
+                            <p class="text-muted text-center">@Model.Student.Program</p>
                             <ul class="list-group list-group-unbordered mb-3">
                                 <li class="list-group-item">
-                                    <b>GPA</b> <a class="float-right">@ViewBag.GPA</a>
+                                    <b>GPA</b> <a class="float-right">@Model.Student.Gpa</a>
                                 </li>
                                 <li class="list-group-item">
-                                    <b>Courses</b> <a class="float-right">@ViewBag.Courses</a>
+                                    <b>Courses</b> <a class="float-right">@Model.Student.CoursesCount</a>
                                 </li>
                                 <li class="list-group-item">
-                                    <b>Friends</b> <a class="float-right">@ViewBag.Friends</a>
+                                    <b>Friends</b> <a class="float-right">@Model.Student.FriendsCount</a>
                                 </li>
                             </ul>
                         </div>
@@ -37,13 +39,16 @@
                     <div class="card card-primary">
                         <div class="card-header">
                             <h3 class="card-title">About Me</h3>
+                            <a class="nav-link" href="/Home/EditAboutMe">
+                                <i class="bi bi-pencil"></i>
+                            </a>
                         </div>
                         <!-- /.card-header -->
                         <div class="card-body">
                             <strong><i class="fas fa-book mr-1"></i> Education</strong>
 
                             <p class="text-muted">
-                                @ViewBag.About.Education
+                                @Model.Student.Education
                             </p>
 
                             <hr>
@@ -51,7 +56,7 @@
                             <strong><i class="fas fa-map-marker-alt mr-1"></i> Location</strong>
 
                             <p class="text-muted">
-                                @ViewBag.About.Location
+                                @Model.Student.Location
                             </p>
 
                             <hr>
@@ -59,7 +64,7 @@
                             <strong><i class="fas fa-pencil-alt mr-1"></i> Skills</strong>
 
                             <p class="text-muted">
-                                @ViewBag.About.Skills
+                                @Model.Student.Skills
                             </p>
 
                             <hr>
@@ -81,7 +86,7 @@
                         <div class="card-body table-responsive p-0">
                             <table class="table table-hover text-nowrap">
                                 <tbody>
-                                @foreach (var Info in @ViewBag.DetailedInfo)
+                                @foreach (var Info in @Model.DetailedInfos)
                                 {
                                     <tr>
                                         <td>@Info.Field</td>

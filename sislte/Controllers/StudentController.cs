@@ -146,7 +146,7 @@ public class StudentController : Controller
         ViewBag.Grades = Grade.GetExampleGrades();
         return View();
     }
-
+    
     public IActionResult Transcript()
     {
         ViewData["ActivePage"] = "Transcript";
