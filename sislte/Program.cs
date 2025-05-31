@@ -5,19 +5,16 @@ using Microsoft.IdentityModel.Tokens;
 using sislte;
 using sislte.Models;
 using sislte.Repository;
+using sislte.Services;
 using SisContext = sislte.Core.SisContext;
 
 var builder = WebApplication.CreateBuilder(args);
 
-var jwtConfig = builder.Configuration.GetSection("JwtSettings");
-
-JwtConfig.Key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"]));
-JwtConfig.Issuer = jwtConfig["Issuer"];
-JwtConfig.Audience = jwtConfig["Audience"];
-
+builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<IStudentRepository, StudentRepository>();
 builder.Services.AddDbContextPool<SisContext>(opt => 
-    NpgsqlDbContextOptionsBuilderExtensions.UseNpgsql(opt));
+    opt.UseNpgsql(builder.Configuration.GetConnectionString("SisContext"))
+);
 builder.Services.AddControllersWithViews();
 builder.Services.AddAuthentication(options =>
     {
@@ -36,7 +33,8 @@ builder.Services.AddAuthentication(options =>
             ValidateIssuerSigningKey = true,
             ValidIssuer = builder.Configuration["Jwt:Issuer"],
             ValidAudience = builder.Configuration["Jwt:Audience"],
-            IssuerSigningKey = JwtConfig.Key,
+            IssuerSigningKey = new SymmetricSecurityKey(
+                Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"]))
         };
     });
 
@@ -47,6 +45,15 @@ var app = builder.Build();
 if (!app.Environment.IsDevelopment())
 {
     app.UseHsts();
+}
+
+using (var scope = app.Services.CreateScope())
+{
+    var services = scope.ServiceProvider;
+
+    var context = services.GetRequiredService<SisContext>();
+    context.Database.EnsureCreated();
+    // DbInitializer.Initialize(context);
 }
 
 app.UseHttpsRedirection();

@@ -1,10 +1,13 @@
+using sislte.Core;
 using sislte.Models;
 using sislte.ViewModels;
 
 namespace sislte.Repository;
 
-public class StudentRepository : IStudentRepository
+public class StudentRepository(SisContext context) : IStudentRepository
 {
+    private readonly SisContext _context = context;
+
     public static readonly List<Skill> SkillsExample = new List<Skill>()
     {
         new Skill
@@ -134,5 +137,21 @@ public class StudentRepository : IStudentRepository
         {
             Student = StudentExample,
         };
+    }
+
+    public void Add(Student student)
+    {
+        _context.Students.Add(student);
+        _context.SaveChanges();
+    }
+
+    public Student? GetById(int id)
+    {
+        return _context.Students.FirstOrDefault(s => s.Id == id);
+    }
+
+    public Student? GetByEmail(string email)
+    {
+        return _context.Students.FirstOrDefault(s => s.Email == email);
     }
 }

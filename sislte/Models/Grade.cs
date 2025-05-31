@@ -1,16 +1,20 @@
+using System.ComponentModel.DataAnnotations.Schema;
+
 namespace sislte.Models;
 
 public class Grade
 {
-    public required string Code { get; set; }
-    public required string Name { get; set; }
-    public required int Act1 { get; set; }
-    public required int Act2 { get; set; }
-    public required int Att { get; set; }
-    public required int Iw { get; set; }
-    public required int Final { get; set; }
-    public required int Sum { get; set; }
-    public required string Mark { get; set; }
+    [DatabaseGenerated(DatabaseGeneratedOption.None)]
+    public int Id { get; set; }
+    public string Code { get; set; }
+    public string Name { get; set; }
+    public int Act1 { get; set; }
+    public int Act2 { get; set; }
+    public int Att { get; set; }
+    public int Iw { get; set; }
+    public int Final { get; set; }
+    public int Sum { get; set; }
+    public string Mark { get; set; }
 
     public static List<Grade> GetExampleGrades()
     {

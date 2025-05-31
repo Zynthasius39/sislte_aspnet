@@ -6,4 +6,8 @@ public interface IStudentRepository
 {
     public StudentHomeViewModel Get();
     public EditAboutMeViewModel GetEditAboutMe();
+
+    Student? GetById(int id);
+    Student? GetByEmail(string email);
+    void Add(Student student);
 }

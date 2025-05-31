@@ -7,5 +7,5 @@ namespace sislte.Core;
 public class SisContext(DbContextOptions<SisContext> options) : DbContext(options)
 {
     public DbSet<Grade> Grades { get; set; }
-    public DbSet<Attachment> Attachments { get; set; }
+    public DbSet<Student> Students { get; set; }
 }

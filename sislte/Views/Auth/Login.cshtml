@@ -1,3 +1,4 @@
+@model sislte.DTOs.LoginDto
 @{
     Layout = null;
 }
@@ -64,13 +65,13 @@
     <div class="login-container">
         <div class="card">
             <div class="card-header text-center">
-                <h4 class="mb-0">Register</h4>
+                <h4 class="mb-0">Login</h4>
             </div>
             <div class="card-body p-4">
-                <form asp-controller="Student" asp-action="Register" method="POST">
+                <form asp-action="Login" method="POST">
                     <div class="mb-3">
                         <label class="form-label">E-Mail</label>
-                        <input asp-for="Email" type="text" inputmode="email" class="form-control" name="Email" placeholder="ypiriyev@std.beu.edu.az" />
+                        <input asp-for="Email" type="text" inputmode="text" class="form-control" name="Email" placeholder="ypiriyev@std.beu.edu.az" />
                         <span asp-validation-for="Email" class="text-danger"></span>
                     </div>
                     <div class="mb-3">
@@ -78,13 +79,13 @@
                         <input asp-for="Password" type="password" class="form-control" id="Password" name="Password" placeholder="Enter your password" />
                         <span asp-validation-for="Password" class="text-danger"></span>
                     </div>
-                    <div class="mb-3">
-                        <label class="form-label">Confirm Password</label>
-                        <input asp-for="ConfirmPassword" type="password" class="form-control" id="ConfirmPassword" name="ConfirmPassword" placeholder="Repeat your password" />
-                        <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+                    <div class="mb-3 d-flex justify-content-between">
+                        <div>
+                            <a asp-action="Reset" class="text-decoration-none">Forgot password?</a>
+                        </div>
                     </div>
                     <div class="d-grid">
-                        <button type="submit" class="btn btn-primary">Register</button>
+                        <button type="submit" class="btn btn-primary">Login</button>
                     </div>
                 </form>
                 
@@ -93,7 +94,7 @@
                 </div>
                 
                 <div class="text-center">
-                    <p class="mb-0">Already have an account? <a href="/Student/Login" class="text-decoration-none">Login</a></p>
+                    <p class="mb-0">Don't have an account? <a asp-action="Register" class="text-decoration-none">Sign up</a></p>
                 </div>
             </div>
         </div>

@@ -1,3 +1,4 @@
+@model sislte.DTOs.ResetDto
 @{
     Layout = null;
 }
@@ -48,11 +49,11 @@
                 <h4 class="mb-0">Forgot Password</h4>
             </div>
             <div class="card-body p-4">
-                <form asp-controller="Student" asp-action="ForgotPassword" method="POST">
+                <form asp-action="Reset" method="POST">
                     <div class="mb-3">
                         <label class="form-label">Enter your Student ID or Email</label>
-                        <input asp-for="Identifier" type="text" class="form-control" name="Identifier" placeholder="e.g., 220106000 or email@example.com" required />
-                        <span asp-validation-for="Identifier" class="text-danger"></span>
+                        <input asp-for="Email" type="text" class="form-control" name="Identifier" placeholder="ypiriyev@std.beu.edu.az" required />
+                        <span asp-validation-for="Email" class="text-danger"></span>
                     </div>
                     <div class="d-grid">
                         <button type="submit" class="btn btn-primary">Send Reset Link</button>
