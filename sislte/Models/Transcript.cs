@@ -1,11 +1,18 @@
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+
 namespace sislte.Models;
 
 public class Transcript
 {
-    public double Gpa { get; set; }
-    public int Tatc { get; set; }
-    public int Tacc { get; set; }
-    public int Sac { get; set; }
+    [Key]
+    [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+    public int Id { get; set; }
+    public double? Gpa { get; set; }
+    public int? Tatc { get; set; }
+    public int? Tacc { get; set; }
+    public int? Sac { get; set; }
+    [Required]
     public List<Semester> Semesters { get; set; }
 
     public static Transcript GetExampleTranscript()

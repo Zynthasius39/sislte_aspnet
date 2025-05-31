@@ -28,7 +28,7 @@ public class HomeController : Controller
     }
 
     [HttpPost]
-    public IActionResult Contact(ContactForm model)
+    public IActionResult Contact(ContactDto model)
     {
         return Redirect("https://alakx.com");
     }

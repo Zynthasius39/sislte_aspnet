@@ -1,11 +1,21 @@
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+
 namespace sislte.Models;
 
 public class Semester
 {
-    public required DateOnly StartDate { get; set; }
-    public required DateOnly EndDate { get; set; }
-    public int Spa { get; set; } = 0;
-    public required List<Course> Courses { get; set; }
+    [Key]
+    [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+    public int Id { get; set; }
+    [Required]
+    public DateOnly StartDate { get; set; }
+    [Required]
+    public DateOnly EndDate { get; set; }
+
+    public int? Spa { get; set; }
+    [Required]
+    public List<Course> Courses { get; set; }
 
     private static int _counter = 0;
 

@@ -1,10 +1,19 @@
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+
 namespace sislte.Models;
 
 public class Attendance
 {
-    public required Course Course { get; set; }
-    public required DateOnly Date { get; set; }
-    public required Presence Presence { get; set; }
+    [Key]
+    [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+    public int Id { get; set; }
+    [Required]
+    public Course Course { get; set; }
+    [Required]
+    public DateOnly Date { get; set; }
+    [Required]
+    public Presence Presence { get; set; }
 
     public string GetPresenceAsString()
     {

@@ -1,12 +1,23 @@
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+
 namespace sislte.Models;
 
 public class Course
 {
-    public required string Code { get; set; }
-    public required string Name { get; set; }
-    public required int Theory { get; set; }
-    public required int Ects { get; set; }
+    [Key]
+    [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+    public int Id { get; set; }
+    public string Code { get; set; }
+    [Required]
+    public string Name { get; set; }
+    [Required]
+    public int Theory { get; set; }
+    [Required]
+    public int Ects { get; set; }
+    [Required]
     public int Grade { get; set; }
+    [Required]
     public string Mark { get; set; } = "";
 
     public static List<Course> GetExampleCourses()

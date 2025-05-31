@@ -1,12 +1,16 @@
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace sislte.Models;
 
 public class Grade
 {
-    [DatabaseGenerated(DatabaseGeneratedOption.None)]
+    [Key]
+    [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
     public int Id { get; set; }
+    [Required]
     public string Code { get; set; }
+    [Required]
     public string Name { get; set; }
     public int Act1 { get; set; }
     public int Act2 { get; set; }

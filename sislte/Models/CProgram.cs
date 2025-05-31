@@ -1,10 +1,19 @@
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+
 namespace sislte.Models;
 
 public class CProgram
 {
-    public required string Code { get; set; }
-    public required string Name { get; set; }
-    public required string Lang { get; set; }
+    [Key]
+    [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+    public int Id { get; set; }
+    [Required]
+    public string Code { get; set; }
+    [Required]
+    public string Name { get; set; }
+    [Required]
+    public string Lang { get; set; }
 
     public static List<CProgram> GetExamplePrograms()
     {
