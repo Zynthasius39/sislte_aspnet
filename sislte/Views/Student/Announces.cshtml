@@ -1,3 +1,4 @@
+@model ICollection<sislte.Models.Announce>;
 <!--begin::App Content-->
 <div class="app-content">
   <!--begin::Container-->
@@ -9,7 +10,7 @@
     </div>
     <!--begin::Row-->
     <div class="row">
-      @foreach (var announce in @ViewBag.Announces)
+      @foreach (var announce in @Model)
       {
         <div class="card mb-3 shadow-sm border-0">
           <div class="card-body">
@@ -17,7 +18,7 @@
             <br/>
             <p>@announce.Message</p>
             <p class="text-muted small mb-0">
-              <i class="bi bi-calendar-event me-1"></i>@announce.Date.ToLongDateString()
+              <i class="bi bi-calendar-event me-1"></i>@announce.Date?.ToLongDateString()
               @* <span class="badge bg-success ms-2">New</span> *@
             </p>
           </div>

@@ -1,3 +1,4 @@
+@model ICollection<sislte.Models.CourseProgram>
 <div class="app-content">
   <div class="container-fluid">
     <div class="row mb-2">
@@ -19,7 +20,7 @@
             </tr>
             </thead>
             <tbody>
-            @foreach (var program in @ViewBag.Programs)
+            @foreach (var program in @Model)
             {
               <tr>
                 <td>@program.Code</td>

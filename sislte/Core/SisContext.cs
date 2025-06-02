@@ -18,10 +18,16 @@ public class SisContext(DbContextOptions<SisContext> options) : DbContext(option
     public DbSet<StudentCourseProgram> StudentCoursePrograms { get; set; }
     public DbSet<StudentSemester> Semesters { get; set; }
     public DbSet<Course> Courses { get; set; }
+    public DbSet<CourseProgram> CoursePrograms { get; set; }
     public DbSet<Grade> Grades { get; set; }
     
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+        modelBuilder.Entity<CourseProgram>()
+            .HasMany(e => e.Courses)
+            .WithMany()
+            .UsingEntity(j => j.ToTable("Courses_CoursePrograms"));
+        
         modelBuilder.Entity<Student>()
             .HasOne(e => e.DetailedStudent)
             .WithOne(e => e.Student)

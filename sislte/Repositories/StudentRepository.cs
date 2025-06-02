@@ -44,6 +44,16 @@ public class StudentRepository(SisContext context) : IStudentRepository
         return await query.FirstOrDefaultAsync(u => u.Id == id);
     }
 
+    public async Task<bool> ExistsByIdAsync(int id)
+    {
+        return await context.Students.AnyAsync(s => s.Id == id);
+    }
+    
+    public async Task<bool> ExistsByEmailAsync(string email)
+    {
+        return await context.Students.AnyAsync(s => s.Email == email);
+    }
+    
     public async Task UpdateAsync(Student student)
     {
         context.Students.Update(student);

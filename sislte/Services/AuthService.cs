@@ -26,7 +26,6 @@ public class AuthService(IStudentRepository studentRepository, IHttpContextAcces
         {
             Email = dto.Email,
             Password = hashedPassword,
-            AvatarURL = "/avatars/default.png",
             DetailedStudent = new DetailedStudent
             {
                 Transcript = new Transcript

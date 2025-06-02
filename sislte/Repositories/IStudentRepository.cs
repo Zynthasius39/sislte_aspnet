@@ -7,6 +7,8 @@ public interface IStudentRepository
     Task<Student?> GetByIdAsync(int id, Func<IQueryable<Student>, IQueryable<Student>>? include = null);
     Task<Student?> GetByEmailAsync(string email, Func<IQueryable<Student>, IQueryable<Student>>? include = null);
     Task<Student?> GetByEmailAsync(string email, bool includeRelated = false);
+    Task<bool> ExistsByIdAsync(int id);
+    Task<bool> ExistsByEmailAsync(string email);
     Task UpdateAsync(Student student);
     Task AddAsync(Student student);
     Task DeleteAsync(Student student);

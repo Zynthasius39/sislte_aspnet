@@ -44,7 +44,7 @@ public class AuthController(IAuthService authService) : Controller
             Expires = DateTimeOffset.UtcNow.AddDays(7)
         });
 
-        return RedirectToAction("Index", "Home");
+        return RedirectToAction("Index", "Student");
     }
 
     [HttpGet]
@@ -98,6 +98,6 @@ public class AuthController(IAuthService authService) : Controller
             Expires = DateTimeOffset.UtcNow.AddDays(7)
         });
 
-        return RedirectToAction("Index", "Home");
+        return RedirectToAction("Index", "Student");
     }
 }
