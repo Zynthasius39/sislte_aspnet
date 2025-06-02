@@ -1,12 +1,13 @@
-using sislte.ViewModels;
+using sislte.Models;
 
-namespace sislte.Models;
+namespace sislte.Repositories;
 
 public interface IStudentRepository
 {
-    Student? GetById(int id);
-    Student? GetByEmail(string email);
-    void Add(Student student);
-    void Update(Student student);
-    void UpdateDetailed(DetailedStudent detailedStudent);
+    Task<Student?> GetByIdAsync(int id, Func<IQueryable<Student>, IQueryable<Student>>? include = null);
+    Task<Student?> GetByEmailAsync(string email, Func<IQueryable<Student>, IQueryable<Student>>? include = null);
+    Task<Student?> GetByEmailAsync(string email, bool includeRelated = false);
+    Task UpdateAsync(Student student);
+    Task AddAsync(Student student);
+    Task DeleteAsync(Student student);
 }

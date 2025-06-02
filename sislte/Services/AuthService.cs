@@ -5,15 +5,16 @@ using Microsoft.IdentityModel.Tokens;
 using sislte.DTOs;
 using sislte.Exceptions;
 using sislte.Models;
+using sislte.Repositories;
 
 namespace sislte.Services;
 
-public class AuthService(IStudentRepository studentRepository, IConfiguration config)
+public class AuthService(IStudentRepository studentRepository, IHttpContextAccessor httpContextAccessor, IConfiguration config)
     : IAuthService
 {
-    public string Register(RegisterDto dto)
+    public async Task<string> Register(RegisterDto dto)
     {
-        if (studentRepository.GetByEmail(dto.Email) != null)
+        if (await studentRepository.GetByEmailAsync(dto.Email, false) != null)
             throw new StudentAlreadyExistsException(dto.Email);
 
         if (dto.Password != dto.ConfirmPassword)
@@ -21,7 +22,7 @@ public class AuthService(IStudentRepository studentRepository, IConfiguration co
 
         var hashedPassword = BCrypt.Net.BCrypt.HashPassword(dto.Password);
 
-        var user = new Student
+        var student = new Student
         {
             Email = dto.Email,
             Password = hashedPassword,
@@ -59,25 +60,44 @@ public class AuthService(IStudentRepository studentRepository, IConfiguration co
 
         try
         {
-            studentRepository.Add(user);
+            await studentRepository.AddAsync(student);
         }
         catch (Exception ex)
         {
             throw new StudentException(ex.Message);
         }
 
-        return GenerateToken(user);
-    }
-
-    public string Login(LoginDto dto)
-    {
-        var student = studentRepository.GetByEmail(dto.Email);
-        if (student == null || !BCrypt.Net.BCrypt.Verify(dto.Password, student.Password))
-            throw new StudentInvalidCredentialsException();
-        
         return GenerateToken(student);
     }
-    
+
+    public async Task<string> Login(LoginDto dto)
+    {
+        var student = await studentRepository.GetByEmailAsync(dto.Email, false);
+
+        if (student == null || !BCrypt.Net.BCrypt.Verify(dto.Password, student.Password))
+            throw new StudentInvalidCredentialsException();
+
+        return GenerateToken(student);
+    }
+
+    public async Task<Student?> GetCurrentStudentAsync()
+    {
+        var httpContext = httpContextAccessor.HttpContext;
+        if (httpContext == null)
+            return null;
+
+        var userClaims = httpContext.User;
+        if (userClaims?.Identity?.IsAuthenticated != true)
+            return null;
+
+        var emailClaim = userClaims.FindFirst("sub") ?? userClaims.FindFirst(ClaimTypes.NameIdentifier);
+        if (emailClaim == null)
+            return null;
+
+        var user = await studentRepository.GetByEmailAsync(emailClaim.Value, true);
+        return user;
+    }
+
     public string GenerateToken(Student student)
     {
         var key = new SymmetricSecurityKey(

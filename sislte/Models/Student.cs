@@ -11,6 +11,6 @@ public class Student
     [Required] public string Password { get; set; }
 
     [Required] public Role Role { get; set; } = Role.PreservedStudent;
-    [Required] public string AvatarURL { get; set; }
+    public string AvatarURL { get; set; } = "/avatars/default.jpg";
     public DetailedStudent? DetailedStudent { get; set; }
 }

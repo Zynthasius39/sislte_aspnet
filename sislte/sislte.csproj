@@ -154,13 +154,12 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="wwwroot\" />
-    </ItemGroup>
-
-    <ItemGroup>
       <AdditionalFiles Include="Views\Auth\Login.cshtml" />
       <AdditionalFiles Include="Views\Auth\Register.cshtml" />
       <AdditionalFiles Include="Views\Auth\Reset.cshtml" />
+      <AdditionalFiles Include="Views\Student\Contact.cshtml" />
+      <AdditionalFiles Include="Views\Student\EditAboutMe.cshtml" />
+      <AdditionalFiles Include="Views\Student\_ViewStart.cshtml" />
     </ItemGroup>
 
 </Project>

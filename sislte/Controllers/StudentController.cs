@@ -1,11 +1,18 @@
+using System.Security.Claims;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Filters;
+using Microsoft.EntityFrameworkCore;
+using sislte.DTOs;
 using sislte.Models;
+using sislte.Repositories;
+using sislte.Services;
+using sislte.ViewModels;
+using sislte.ViewModels.Layout;
 
 namespace sislte.Controllers;
 
-public class StudentController(IStudentRepository studentRepository) : Controller
+public class StudentController(IStudentRepository studentRepository, IAuthService authService) : Controller
 {
-    private readonly IStudentRepository _studentRepository = studentRepository;
     //
     // public IActionResult Announces()
     // {
@@ -66,31 +73,126 @@ public class StudentController(IStudentRepository studentRepository) : Controlle
     //     return View();
     // }
 
+    [HttpGet]
+    public async Task<IActionResult> Index()
+    {
+        ViewData["ActivePage"] = "Index";
+        var email = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value;
+        if (string.IsNullOrEmpty(email))
+        {
+            return Unauthorized();
+        }
+
+        var student = await studentRepository.GetByEmailAsync(email, true);
+
+        if (student?.DetailedStudent != null)
+            return View(new StudentHomeViewModel
+            {
+                DetailedStudent = student.DetailedStudent,
+            });
+
+        return Unauthorized();
+    }
+
+    [HttpGet]
+    public IActionResult Contact()
+    {
+        ViewData["ActivePage"] = "Contact";
+        ViewBag.ContactEmail = "support@beu.edu.az";
+        ViewBag.ContactPhone = "+994 12 1212242";
+        ViewBag.ContactAddress = "Khirdalan, Baku Engineering University";
+        return View();
+    }
+
+    // TODO: Contact Page
+    [HttpPost]
+    public IActionResult Contact(ContactDto contactDto)
+    {
+        return Redirect("https://alakx.com");
+    }
+
+
+    [HttpGet]
+    public async Task<IActionResult> EditAboutMe()
+    {
+        var email = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value;
+        var role = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Role)?.Value;
+
+        Console.WriteLine(email + " | " + role);
+        if (string.IsNullOrEmpty(email) || role == nameof(Role.PreservedStudent))
+            return Unauthorized();
+
+        var student = await studentRepository.GetByEmailAsync(
+            email,
+            query => query.Include(s => s.DetailedStudent)
+        );
+
+        if (student?.DetailedStudent == null)
+            return Unauthorized();
+
+        var vm = new EditAboutMeDto
+        {
+            FullName = student.DetailedStudent.FullName,
+            Education = student.DetailedStudent.Education,
+            Location = student.DetailedStudent.Location,
+            Notes = student.DetailedStudent.Notes,
+        };
+        return View(vm);
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> EditAboutMe(EditAboutMeDto editAboutMeDto)
+    {
+        var email = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value;
+        if (string.IsNullOrEmpty(email))
+            return Unauthorized();
+
+        var student = await studentRepository.GetByEmailAsync(
+            email,
+            query => query.Include(s => s.DetailedStudent)
+        );
+
+        if (student == null)
+            return Unauthorized();
+        if (student.DetailedStudent == null)
+            return Forbid();
+
+        student.DetailedStudent.FullName = editAboutMeDto.FullName;
+        student.DetailedStudent.Location = editAboutMeDto.Location;
+        student.DetailedStudent.Education = editAboutMeDto.Education;
+        student.DetailedStudent.Notes = editAboutMeDto.Notes;
+        await studentRepository.UpdateAsync(student);
+
+        return RedirectToAction("Index");
+    }
+
     public static string GetMarkForSum(int sum)
     {
-        if (sum >= 99) return "A+";
-        if (sum >= 90) return "A";
-        if (sum >= 80) return "B";
-        if (sum >= 70) return "C";
-        if (sum >= 60) return "D";
-        if (sum >= 50) return "E";
-        if (sum >= 30) return "F";
-        return "";
+        return sum switch
+        {
+            >= 99 => "A+",
+            >= 90 => "A",
+            >= 80 => "B",
+            >= 70 => "C",
+            >= 60 => "D",
+            >= 50 => "E",
+            >= 30 => "F",
+            _ => ""
+        };
     }
-    
+
     public static string GetColorForMark(string mark)
     {
         return mark switch
         {
             "A+" => "#18a06e", // Deep Green
-            "A"  => "#4caf50", // Green
-            "B"  => "#8bc34a", // Light Green
-            "C"  => "#cddc39", // Lime
-            "D"  => "#ffeb3b", // Yellow
-            "E"  => "#ff9800", // Orange
-            "F"  => "#f44336", // Red
-            _    => "#9e9e9e"  // Gray for unknown
+            "A" => "#4caf50", // Green
+            "B" => "#8bc34a", // Light Green
+            "C" => "#cddc39", // Lime
+            "D" => "#ffeb3b", // Yellow
+            "E" => "#ff9800", // Orange
+            "F" => "#f44336", // Red
+            _ => "#9e9e9e" // Gray for unknown
         };
     }
-    
 }

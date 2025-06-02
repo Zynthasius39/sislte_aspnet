@@ -1,39 +1,64 @@
 using Microsoft.EntityFrameworkCore;
 using sislte.Core;
 using sislte.Models;
-using sislte.ViewModels;
 
-namespace sislte.Repository;
+namespace sislte.Repositories;
 
 public class StudentRepository(SisContext context) : IStudentRepository
 {
-    public void Add(Student student)
+    public async Task<Student?> GetByEmailAsync(string email, bool includeRelated = false)
     {
-        context.Students.Add(student);
-        context.SaveChanges();
+        var query = context.Students.AsQueryable();
+
+        if (includeRelated)
+        {
+            query = query
+                .Include(s => s.DetailedStudent)
+                .ThenInclude(e => e.Transcript)
+                .ThenInclude(e => e.StudentCourseProgram)
+                .ThenInclude(e => e.StudentSemesters)
+                .Include(s => s.DetailedStudent)
+                .ThenInclude(s => s.Advisor)
+                .Include(s => s.DetailedStudent)
+                .ThenInclude(s => s.Scholarship);
+        }
+
+        return await query.FirstOrDefaultAsync(u => u.Email == email);
+    }
+    
+    public async Task<Student?> GetByEmailAsync(string email, Func<IQueryable<Student>, IQueryable<Student>>? include = null)
+    {
+        var query = context.Students.AsQueryable();
+        if (include != null)
+            query = include(query);
+
+        return await query.FirstOrDefaultAsync(u => u.Email == email);
     }
 
-    public Student? GetById(int id)
+    public async Task<Student?> GetByIdAsync(int id, Func<IQueryable<Student>, IQueryable<Student>>? include = null)
     {
-        return context.Students.FirstOrDefault(s => s.Id == id);
+        var query = context.Students.AsQueryable();
+        if (include != null)
+            query = include(query);
+
+        return await query.FirstOrDefaultAsync(u => u.Id == id);
     }
 
-    public Student? GetByEmail(string email)
-    {
-        return context.Students
-            .Include(s => s.DetailedStudent)
-            .FirstOrDefault(s => s.Email == email);
-    }
-
-    public void Update(Student student)
+    public async Task UpdateAsync(Student student)
     {
         context.Students.Update(student);
-        context.SaveChanges();
+        await context.SaveChangesAsync();
     }
 
-    public void UpdateDetailed(DetailedStudent detailedStudent)
+    public async Task AddAsync(Student student)
     {
-        context.DetailedStudents.Update(detailedStudent);
-        context.SaveChanges();
+        context.Students.Add(student);
+        await context.SaveChangesAsync();
+    }
+
+    public async Task DeleteAsync(Student student)
+    {
+        context.Students.Remove(student);
+        await context.SaveChangesAsync();
     }
 }

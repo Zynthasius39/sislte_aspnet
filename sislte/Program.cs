@@ -2,9 +2,7 @@ using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
-using sislte;
-using sislte.Models;
-using sislte.Repository;
+using sislte.Repositories;
 using sislte.Services;
 using SisContext = sislte.Core.SisContext;
 
@@ -15,7 +13,11 @@ builder.Services.AddScoped<IStudentRepository, StudentRepository>();
 builder.Services.AddDbContextPool<SisContext>(opt => 
     opt.UseNpgsql(builder.Configuration.GetConnectionString("SisContext"))
 );
-builder.Services.AddControllersWithViews();
+builder.Services.AddHttpContextAccessor();
+builder.Services.AddControllersWithViews(options =>
+{
+    options.Filters.Add<LayoutModelFilter>();
+});
 builder.Services.AddAuthentication(options =>
     {
         options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -25,6 +27,18 @@ builder.Services.AddAuthentication(options =>
     {
         options.RequireHttpsMetadata = false;
         options.SaveToken = true;
+        options.Events = new JwtBearerEvents
+        {
+            OnMessageReceived = context =>
+            {
+                var token = context.Request.Cookies["jwt"];
+                if (!string.IsNullOrEmpty(token))
+                {
+                    context.Token = token;
+                }
+                return Task.CompletedTask;
+            }
+        };
         options.TokenValidationParameters = new TokenValidationParameters
         {
             ValidateIssuer = true,
@@ -41,16 +55,6 @@ builder.Services.AddAuthentication(options =>
 builder.Services.AddAuthorization();
 
 var app = builder.Build();
-
-app.Use(async (context, next) =>
-{
-    var token = context.Request.Cookies["jwt"];
-    if (!string.IsNullOrEmpty(token))
-    {
-        context.Request.Headers.Authorization = $"Bearer {token}";
-    }
-    await next();
-});
 
 if (!app.Environment.IsDevelopment())
 {
@@ -74,7 +78,7 @@ app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}");
+    pattern: "{controller=Student}/{action=Index}/{id?}");
 app.MapStaticAssets();
 
 app.Run();

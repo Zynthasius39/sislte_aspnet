@@ -1,4 +1,7 @@
 @model sislte.ViewModels.StudentHomeViewModel;
+@{
+    Layout = "_StudentLayout";
+}
 <div class="content-wrapper" style="min-height: 1604.8px;">
     <section class="content-header">
         <div class="container-fluid">
@@ -36,7 +39,7 @@
                     <div class="card card-primary">
                         <div class="card-header">
                             <h3 class="card-title">About Me</h3>
-                            <a class="nav-link" href="/Home/EditAboutMe">
+                            <a class="nav-link" asp-action="EditAboutMe">
                                 <i class="bi bi-pencil"></i>
                             </a>
                         </div>
@@ -61,7 +64,7 @@
                             <strong><i class="fas fa-pencil-alt mr-1"></i> Skills</strong>
 
                             <p class="text-muted">
-                                @Model.DetailedStudent.Skills
+                                @string.Join(" | ", Model.DetailedStudent.Skills)
                             </p>
 
                             <hr>

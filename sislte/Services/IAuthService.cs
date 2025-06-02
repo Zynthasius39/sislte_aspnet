@@ -5,7 +5,8 @@ namespace sislte.Services;
 
 public interface IAuthService
 {
-    string Register(RegisterDto dto);
-    string Login(LoginDto dto);
+    Task<string> Register(RegisterDto dto);
+    Task<string> Login(LoginDto dto);
+    Task<Student?> GetCurrentStudentAsync();
     string GenerateToken(Student student);
 }

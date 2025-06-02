@@ -14,7 +14,7 @@ public class AuthController(IAuthService authService) : Controller
     }
 
     [HttpPost]
-    public IActionResult Login(LoginDto loginDto)
+    public async Task<IActionResult> Login(LoginDto loginDto)
     {
         if (!ModelState.IsValid)
         {
@@ -30,7 +30,7 @@ public class AuthController(IAuthService authService) : Controller
 
         try
         {
-            token = authService.Login(loginDto);
+            token = await authService.Login(loginDto);
         }
         catch (StudentException ex)
         {
@@ -40,8 +40,6 @@ public class AuthController(IAuthService authService) : Controller
 
         Response.Cookies.Append("jwt", token, new CookieOptions
         {
-            HttpOnly = true,
-            Secure = true,
             SameSite = SameSiteMode.Strict,
             Expires = DateTimeOffset.UtcNow.AddDays(7)
         });
@@ -68,7 +66,7 @@ public class AuthController(IAuthService authService) : Controller
     }
 
     [HttpPost]
-    public IActionResult Register([FromForm] RegisterDto registerDto)
+    public async Task<IActionResult> Register([FromForm] RegisterDto registerDto)
     {
         if (!ModelState.IsValid)
         {
@@ -84,7 +82,7 @@ public class AuthController(IAuthService authService) : Controller
 
         try
         {
-            token = authService.Register(registerDto);
+            token = await authService.Register(registerDto);
         }
         catch (StudentException ex)
         {
