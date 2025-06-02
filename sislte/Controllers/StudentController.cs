@@ -6,67 +6,66 @@ namespace sislte.Controllers;
 public class StudentController(IStudentRepository studentRepository) : Controller
 {
     private readonly IStudentRepository _studentRepository = studentRepository;
+    //
+    // public IActionResult Announces()
+    // {
+    //     ViewData["ActivePage"] = "Announces";
+    //     ViewBag.Announces = new List<Announce>();
+    //     ViewBag.Announces.Add(
+    //         new Announce()
+    //         {
+    //             Title = "Tələbələrin nəzərinə: 8000-dən çox beynəlxalq təlimə ödənişsiz qoşulmaq fürsətini qaçırmayın!",
+    //             Message =
+    //                 "İqtisadiyyat Nazirliyinin tabeliyində Dördüncü Sənaye İnqilabının Təhlili və Koordinasiya Mərkəzi (4SİM), Elm və Təhsil Nazirliyinin tabeliyində Təhsilin İnkişafı Fondu və ABŞ-nin “Coursera” şirkətinin birgə əməkdaşlığı ilə “4Sİ Akadeniyası-Milli Proqram”a qeydiyyat davam edir. Proqram 1 il ərzində on minlərlə istifadəçinin dünyanın ən böyük onlayn tədris platforması olan “Coursera”da təlimlərdən ödənişsiz faydalanmaq üçün əvəzolunmaz fürsətdir. https://form.4sim.gov.az/ linkinə daxil olub qeydiyyatdan keçərək bu imkandan yararlana bilərsiniz.",
+    //             Date = DateOnly.FromDateTime(DateTime.Now)
+    //         }
+    //     );
+    //     return View();
+    // }
+    //
+    // public IActionResult Attendance()
+    // {
+    //     ViewData["ActivePage"] = "Attendance";
+    //     ViewBag.SemesterNo = 1;
+    //     ViewBag.FullName = "Sekiro Wolf";
+    //     ViewBag.Program = "Internet Technologies";
+    //     ViewBag.Attendances = sislte.Models.AttendanceEntry.GetExampleAttendances();
+    //     return View();
+    // }
+    //
+    // public IActionResult Programs()
+    // {
+    //     ViewData["ActivePage"] = "Programs";
+    //     ViewBag.Programs = StudentCourseProgram.GetExamplePrograms();
+    //     return View();
+    // }
+    //
+    // public IActionResult Courses()
+    // {
+    //     ViewData["ActivePage"] = "Courses";
+    //     ViewBag.Courses = Course.GetExampleCourses().Slice(8, 5);
+    //     return View();
+    // }
+    //
+    // public IActionResult Grades()
+    // {
+    //     ViewData["ActivePage"] = "Grades";
+    //     ViewBag.Grades = Grade.GetExampleGrades();
+    //     return View();
+    // }
+    //
+    // public IActionResult Transcript()
+    // {
+    //     ViewData["ActivePage"] = "Transcript";
+    //     ViewBag.FullName = "Sekiro Wolf";
+    //     ViewBag.Email = "sekiro@std.beu.edu.az";
+    //     ViewBag.Phone = "+994(55) 555-55-55";
+    //     ViewBag.Program = "Information Technologies";
+    //     ViewBag.StudentId = 220106000;
+    //     ViewBag.Transcript = sislte.Models.Transcript.GetExampleTranscript();
+    //     return View();
+    // }
 
-
-    public IActionResult Announces()
-    {
-        ViewData["ActivePage"] = "Announces";
-        ViewBag.Announces = new List<Announce>();
-        ViewBag.Announces.Add(
-            new Announce()
-            {
-                Title = "Tələbələrin nəzərinə: 8000-dən çox beynəlxalq təlimə ödənişsiz qoşulmaq fürsətini qaçırmayın!",
-                Message =
-                    "İqtisadiyyat Nazirliyinin tabeliyində Dördüncü Sənaye İnqilabının Təhlili və Koordinasiya Mərkəzi (4SİM), Elm və Təhsil Nazirliyinin tabeliyində Təhsilin İnkişafı Fondu və ABŞ-nin “Coursera” şirkətinin birgə əməkdaşlığı ilə “4Sİ Akadeniyası-Milli Proqram”a qeydiyyat davam edir. Proqram 1 il ərzində on minlərlə istifadəçinin dünyanın ən böyük onlayn tədris platforması olan “Coursera”da təlimlərdən ödənişsiz faydalanmaq üçün əvəzolunmaz fürsətdir. https://form.4sim.gov.az/ linkinə daxil olub qeydiyyatdan keçərək bu imkandan yararlana bilərsiniz.",
-                Date = DateOnly.FromDateTime(DateTime.Now)
-            }
-        );
-        return View();
-    }
-
-    public IActionResult Attendance()
-    {
-        ViewData["ActivePage"] = "Attendance";
-        ViewBag.SemesterNo = 1;
-        ViewBag.FullName = "Sekiro Wolf";
-        ViewBag.Program = "Internet Technologies";
-        ViewBag.Attendances = sislte.Models.Attendance.GetExampleAttendances();
-        return View();
-    }
-
-    public IActionResult Programs()
-    {
-        ViewData["ActivePage"] = "Programs";
-        ViewBag.Programs = CProgram.GetExamplePrograms();
-        return View();
-    }
-
-    public IActionResult Courses()
-    {
-        ViewData["ActivePage"] = "Courses";
-        ViewBag.Courses = Course.GetExampleCourses().Slice(8, 5);
-        return View();
-    }
-
-    public IActionResult Grades()
-    {
-        ViewData["ActivePage"] = "Grades";
-        ViewBag.Grades = Grade.GetExampleGrades();
-        return View();
-    }
-    
-    public IActionResult Transcript()
-    {
-        ViewData["ActivePage"] = "Transcript";
-        ViewBag.FullName = "Sekiro Wolf";
-        ViewBag.Email = "sekiro@std.beu.edu.az";
-        ViewBag.Phone = "+994(55) 555-55-55";
-        ViewBag.Program = "Information Technologies";
-        ViewBag.StudentId = 220106000;
-        ViewBag.Transcript = sislte.Models.Transcript.GetExampleTranscript();
-        return View();
-    }
-    
     public static string GetMarkForSum(int sum)
     {
         if (sum >= 99) return "A+";
@@ -93,5 +92,5 @@ public class StudentController(IStudentRepository studentRepository) : Controlle
             _    => "#9e9e9e"  // Gray for unknown
         };
     }
-
+    
 }

@@ -3,12 +3,14 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace sislte.Models;
 
-public class Skill
+public class CourseProgram
 {
     public int Id { get; set; }
     [Required]
+    public string Code { get; set; }
+    [Required]
     public string Name { get; set; }
-    public string? Description { get; set; }
-    public string? Type { get; set; }
-    public string? Category { get; set; }
+    [Required]
+    public string Lang { get; set; }
+    public ICollection<Course> Courses { get; set; } = new List<Course>();
 }

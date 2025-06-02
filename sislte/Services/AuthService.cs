@@ -24,7 +24,37 @@ public class AuthService(IStudentRepository studentRepository, IConfiguration co
         var user = new Student
         {
             Email = dto.Email,
-            Password = hashedPassword
+            Password = hashedPassword,
+            AvatarURL = "/avatars/default.png",
+            DetailedStudent = new DetailedStudent
+            {
+                Transcript = new Transcript
+                {
+                    StudentCourseProgram = new StudentCourseProgram
+                    {
+                        Code = "TEST",
+                        Name = "TEST",
+                        Lang = "EN",
+                    },
+                },
+                Advisor = new Advisor
+                {
+                    Email = "adssad",
+                    Password = "adssad",
+                    FullName = "SDFFDSA",
+                },
+                FullName = "asdasdssda",
+                BirthDate = DateOnly.FromDateTime(new DateTime(1999, 09, 10)),
+                EntranceDate = DateOnly.FromDateTime(new DateTime(2020, 05, 01)),
+                GraduateDate = DateOnly.FromDateTime(new DateTime(2024, 05, 01)),
+                EarnedCredits = 30,
+                Education = "adssda",
+                Phone = "911",
+                EmergencyPhone = "911",
+                Gpa = 3.97,
+                Loans = 0,
+                Location = "sdaasd",
+            }
         };
 
         try
@@ -57,8 +87,8 @@ public class AuthService(IStudentRepository studentRepository, IConfiguration co
 
         var claims = new[]
         {
-            new Claim(ClaimTypes.NameIdentifier, student.Email.ToString()),
-            new Claim(ClaimTypes.Role, "Student")
+            new Claim(ClaimTypes.NameIdentifier, student.Email),
+            new Claim(ClaimTypes.Role, student.Role.ToString())
         };
 
         var token = new JwtSecurityToken(

@@ -77,7 +77,6 @@ public class AuthController(IAuthService authService) : Controller
                 .SelectMany(ms => ms.Value.Errors)
                 .Select(e => e.ErrorMessage)
                 .ToList();
-            Console.WriteLine("modelstate invalid");
             return View();
         }
 
@@ -90,7 +89,6 @@ public class AuthController(IAuthService authService) : Controller
         catch (StudentException ex)
         {
             ViewBag.errors = new List<string> { ex.Message };
-            Console.WriteLine("exception");
             return View();
         }
 
@@ -102,7 +100,6 @@ public class AuthController(IAuthService authService) : Controller
             Expires = DateTimeOffset.UtcNow.AddDays(7)
         });
 
-        Console.WriteLine("redirection");
         return RedirectToAction("Index", "Home");
     }
 }

@@ -42,6 +42,16 @@ builder.Services.AddAuthorization();
 
 var app = builder.Build();
 
+app.Use(async (context, next) =>
+{
+    var token = context.Request.Cookies["jwt"];
+    if (!string.IsNullOrEmpty(token))
+    {
+        context.Request.Headers.Authorization = $"Bearer {token}";
+    }
+    await next();
+});
+
 if (!app.Environment.IsDevelopment())
 {
     app.UseHsts();
@@ -59,6 +69,7 @@ using (var scope = app.Services.CreateScope())
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 app.UseRouting();
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllerRoute(

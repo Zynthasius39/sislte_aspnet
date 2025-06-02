@@ -4,5 +4,5 @@ namespace sislte.ViewModels;
 
 public class EditAboutMeViewModel
 {
-    public Student Student { get; set; }
+    public DetailedStudent? DetailedStudent { get; set; }
 }
