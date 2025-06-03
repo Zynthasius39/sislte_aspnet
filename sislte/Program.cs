@@ -13,6 +13,7 @@ builder.Services.AddScoped<IStudentRepository, StudentRepository>();
 builder.Services.AddScoped<IAnnouncesRepository, AnnouncesRepository>();
 builder.Services.AddScoped<ICourseRepository, CourseRepository>();
 builder.Services.AddScoped<ICourseProgramRepository, CourseProgramRepository>();
+builder.Services.AddScoped<IGradeRepository, GradeRepository>();
 builder.Services.AddScoped<AuthorizedFilter>();
 builder.Services.AddDbContextPool<SisContext>(opt => 
     opt.UseNpgsql(builder.Configuration.GetConnectionString("SisContext"))

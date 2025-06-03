@@ -1,4 +1,5 @@
 @using sislte.Controllers
+@model ICollection<sislte.Models.Grade>
 <!--begin::App Content-->
 <div class="app-content">
   <!--begin::Container-->
@@ -24,17 +25,17 @@
             </tr>
             </thead>
             <tbody>
-            @foreach (var grade in @ViewBag.Grades)
+            @foreach (var grade in Model)
             {
               <tr class="align-middle">
-                <td><span class="tag tag-success">@grade.Code</span></td>
-                <td>@(grade.Name ?? "")</td>
-                <td>@((grade.Act1 == -1) ? "" : grade.Att)</td>
-                <td>@((grade.Act2 == -1) ? "" : grade.Att)</td>
-                <td>@((grade.Att == -1) ? "" : grade.Att)</td>
-                <td>@((grade.Iw == -1) ? "" : grade.Att)</td>
-                <td>@((grade.Final == -1) ? "" : grade.Att)</td>
-                <td>@((grade.Sum == -1) ? "" : grade.Att)</td>
+                <td><span class="tag tag-success">@grade.Course.Name</span></td>
+                <td>@grade.Course.Name</td>
+                <td>@(grade.Act1 == -1 ? "" : grade.Act1)</td>
+                <td>@(grade.Act2 == -1 ? "" : grade.Act2)</td>
+                <td>@(grade.Att == -1 ? "" : grade.Att)</td>
+                <td>@(grade.Iw == -1 ? "" : grade.Iw)</td>
+                <td>@(grade.Final == -1 ? "" : grade.Final)</td>
+                <td>@(grade.Sum == -1 ? "" : grade.Sum)</td>
                 <td>
                   <div class="rounded-circle d-flex align-items-center justify-content-center text-white fw-bold"
                        style="width: 30px; height: 30px; font-size: 20px; background-color: @StudentController.GetColorForMark(StudentController.GetMarkForSum(grade.Sum)); box-shadow: 0 2px 6px rgba(0,0,0,0.4);">

@@ -26,35 +26,6 @@ public class AuthService(IStudentRepository studentRepository, IHttpContextAcces
         {
             Email = dto.Email,
             Password = hashedPassword,
-            DetailedStudent = new DetailedStudent
-            {
-                Transcript = new Transcript
-                {
-                    StudentCourseProgram = new StudentCourseProgram
-                    {
-                        Code = "TEST",
-                        Name = "TEST",
-                        Lang = "EN",
-                    },
-                },
-                Advisor = new Advisor
-                {
-                    Email = "adssad",
-                    Password = "adssad",
-                    FullName = "SDFFDSA",
-                },
-                FullName = "asdasdssda",
-                BirthDate = DateOnly.FromDateTime(new DateTime(1999, 09, 10)),
-                EntranceDate = DateOnly.FromDateTime(new DateTime(2020, 05, 01)),
-                GraduateDate = DateOnly.FromDateTime(new DateTime(2024, 05, 01)),
-                EarnedCredits = 30,
-                Education = "adssda",
-                Phone = "911",
-                EmergencyPhone = "911",
-                Gpa = 3.97,
-                Loans = 0,
-                Location = "sdaasd",
-            }
         };
 
         try

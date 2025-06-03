@@ -18,7 +18,9 @@ public class StudentController(
     IAnnouncesRepository announcesRepository,
     ICourseRepository courseRepository,
     ICourseProgramRepository courseProgramRepository,
+    IGradeRepository gradeRepository,
     IAuthService authService,
+    IWebHostEnvironment webHostEnvironment,
     SisContext context
 ) : Controller
 {
@@ -44,103 +46,16 @@ public class StudentController(
         return View(await courseProgramRepository.GetAll());
     }
     
-    // public IActionResult Courses()
-    // {
-    //     ViewData["ActivePage"] = "Courses";
-    //     ViewBag.Courses = Course.GetExampleCourses().Slice(8, 5);
-    //     return View();
-    // }
-    //
+    public async Task<IActionResult> Courses()
+    {
+        ViewData["ActivePage"] = "Courses";
+        return View(await courseRepository.GetAll());
+    }
+    
     public async Task<IActionResult> Grades()
     {
         ViewData["ActivePage"] = "Grades";
-
-        var courses = new List<Course>
-        {
-            // AE Courses
-            new Course { Code = "IT 113", Name = "Information management", Theory = 1, Ects = 3 },
-            new Course { Code = "IT 115", Name = "Information technologies", Theory = 1, Ects = 3 },
-            new Course { Code = "IT 188", Name = "Computer-aided design", Theory = 2, Ects = 7 },
-            new Course { Code = "IT 205", Name = "Object oriented programming", Theory = 2, Ects = 7 },
-            new Course { Code = "IT 252", Name = "Basics of programming- 2", Theory = 2, Ects = 5 },
-            new Course { Code = "IT 338", Name = "Internet Technologies", Theory = 2, Ects = 6 },
-            new Course { Code = "IT 383", Name = "Computer modeling", Theory = 2, Ects = 7 },
-            new Course { Code = "IT 385", Name = "Management in information systems", Theory = 2, Ects = 7 },
-            new Course { Code = "IT 386", Name = "Web programming", Theory = 2, Ects = 6 },
-            new Course { Code = "IT 387", Name = "Introduction to multi-platform programming", Theory = 2, Ects = 7 },
-            new Course { Code = "IT 388", Name = "Modern programming languages- 2", Theory = 2, Ects = 7 },
-            new Course { Code = "IT 390", Name = "Mobile application design", Theory = 2, Ects = 7 },
-            new Course { Code = "IT 437", Name = "Machine Learning", Theory = 2, Ects = 6 },
-            new Course { Code = "IT 451", Name = "Data Mining and Storing", Theory = 2, Ects = 6 },
-            new Course { Code = "IT 485", Name = "Database programming", Theory = 2, Ects = 6 },
-            new Course { Code = "IT 487", Name = "Data analytics and information management", Theory = 2, Ects = 6 },
-            new Course { Code = "MINF 273", Name = "Mathematical programming", Theory = 2, Ects = 7 },
-
-            // NAE Courses
-            new Course
-            {
-                Code = "BA 108", Name = "Principles of Entrepreneurship and Introduction to Business", Theory = 1,
-                Ects = 3
-            },
-            new Course { Code = "BA 111", Name = "Fundamentals of Management", Theory = 1, Ects = 9 },
-            new Course { Code = "ECON 163", Name = "Engineering Economics", Theory = 1, Ects = 9 },
-            new Course
-            {
-                Code = "ENG 010", Name = "English for business and academic communication (reading and writing)",
-                Theory = 0, Ects = 5
-            },
-            new Course
-            {
-                Code = "ENG 020", Name = "English for business and academic communication (listening and speaking)",
-                Theory = 0, Ects = 5
-            },
-            new Course
-            {
-                Code = "ENG 030", Name = "English for business and academic communication (for academic purposes)",
-                Theory = 0, Ects = 5
-            },
-            new Course
-            {
-                Code = "GER 010", Name = "German business and academic communication (reading and writing)", Theory = 0,
-                Ects = 5
-            },
-            new Course
-            {
-                Code = "GER 020", Name = "German for business and academic communication (listening and speaking)",
-                Theory = 0, Ects = 5
-            },
-            new Course
-            {
-                Code = "GER 030", Name = "German for business and academic communication (for academic purposes)",
-                Theory = 0, Ects = 5
-            },
-            new Course
-            {
-                Code = "LAW 110", Name = "Constitution of Republic of Azerbaijan and Fundamentals of Law", Theory = 1,
-                Ects = 3
-            },
-            new Course { Code = "MATH 285", Name = "Numerical analysis", Theory = 2, Ects = 5 },
-            new Course { Code = "MINF 167", Name = "Logic", Theory = 1, Ects = 3 },
-            new Course { Code = "PA 139", Name = "Politology", Theory = 1, Ects = 3 },
-            new Course { Code = "PHIL 159", Name = "Philosophy", Theory = 1, Ects = 3 },
-            new Course { Code = "SOC 110", Name = "Sociology", Theory = 1, Ects = 3 },
-            new Course { Code = "SOC 150", Name = "Introduction to Multiculturalism", Theory = 1, Ects = 3 },
-            new Course { Code = "SOC 180", Name = "Ethics and aesthetics", Theory = 1, Ects = 3 },
-        };
-
-        courses.ForEach(c => context.Courses.Add(c));
-        await context.SaveChangesAsync();
-        
-        // var courseProgram = new CourseProgram {
-        //     Name = "MAIN",
-        //     Code = "M0",
-        //     Lang = "EN",
-        //     Courses = courses
-        // };
-        // context.CoursePrograms.Add(courseProgram);
-        // await context.SaveChangesAsync();
-        
-        return Ok();
+        return View(await gradeRepository.GetAll());
     }
     
     // public IActionResult Transcript()
@@ -211,13 +126,13 @@ public class StudentController(
             FullName = student.DetailedStudent.FullName,
             Education = student.DetailedStudent.Education,
             Location = student.DetailedStudent.Location,
-            Notes = student.DetailedStudent.Notes,
+            Notes = student.DetailedStudent.Notes ?? "",
         };
         return View(vm);
     }
 
     [HttpPost]
-    public async Task<IActionResult> EditAboutMe(EditAboutMeDto editAboutMeDto)
+    public async Task<IActionResult> EditAboutMe([FromForm] EditAboutMeDto editAboutMeDto)
     {
         var email = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value;
         if (string.IsNullOrEmpty(email))
@@ -233,10 +148,32 @@ public class StudentController(
         if (student.DetailedStudent == null)
             return Forbid();
 
+        Console.WriteLine(editAboutMeDto.Avatar?.Length.ToString() ?? "NULL AVATAR");
+        if (editAboutMeDto.Avatar == null || editAboutMeDto.Avatar.Length == 0)
+            return BadRequest();
+
+        if (editAboutMeDto.Avatar.Length > 2 * 1024 * 1024)
+            ViewBag.Errors = new List<string>{ "File too large" };
+
+        var allowedExtensions = new[] { ".jpg", ".jpeg", ".png", ".gif" };
+        var extension = Path.GetExtension(editAboutMeDto.Avatar.FileName).ToLowerInvariant();
+
+        if (!allowedExtensions.Contains(extension))
+            ViewBag.Errors = new List<string>{ "File format not supported" };
+
+        var fileName = Guid.NewGuid() + extension;
+        var filePath = Path.Combine(webHostEnvironment.WebRootPath, "avatars", fileName);
+
+        await using (var stream = new FileStream(filePath, FileMode.Create))
+        {
+            await editAboutMeDto.Avatar.CopyToAsync(stream);
+        }
+
         student.DetailedStudent.FullName = editAboutMeDto.FullName;
         student.DetailedStudent.Location = editAboutMeDto.Location;
         student.DetailedStudent.Education = editAboutMeDto.Education;
         student.DetailedStudent.Notes = editAboutMeDto.Notes;
+        student.AvatarURL = filePath;
         await studentRepository.UpdateAsync(student);
 
         return RedirectToAction("Index");

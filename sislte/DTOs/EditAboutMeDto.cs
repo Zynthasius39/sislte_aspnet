@@ -10,5 +10,8 @@ public class EditAboutMeDto
     public string Location { get; set; }
     [Required]
     public string Education { get; set; }
-    public string? Notes { get; set; }
+    [Required]
+    public string Notes { get; set; }
+    [Display(Name = "Avatar")]
+    public IFormFile? Avatar { get; set; }
 }

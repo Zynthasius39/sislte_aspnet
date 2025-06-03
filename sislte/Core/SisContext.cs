@@ -26,8 +26,8 @@ public class SisContext(DbContextOptions<SisContext> options) : DbContext(option
         modelBuilder.Entity<CourseProgram>()
             .HasMany(e => e.Courses)
             .WithMany()
-            .UsingEntity(j => j.ToTable("Courses_CoursePrograms"));
-        
+            .UsingEntity<Course_CourseProgram>();
+    
         modelBuilder.Entity<Student>()
             .HasOne(e => e.DetailedStudent)
             .WithOne(e => e.Student)
@@ -78,7 +78,8 @@ public class SisContext(DbContextOptions<SisContext> options) : DbContext(option
         modelBuilder.Entity<Grade>()
             .HasOne(e => e.Course)
             .WithOne()
-            .HasForeignKey<Course>(e => e.Id)
+            .HasForeignKey<Grade>(e => e.CourseId)
+            .OnDelete(DeleteBehavior.Restrict)
             .IsRequired();
         modelBuilder.Entity<Grade>()
             .HasMany(e => e.AttendanceEntries)
@@ -86,5 +87,7 @@ public class SisContext(DbContextOptions<SisContext> options) : DbContext(option
             .HasForeignKey(e => e.GradeId)
             .OnDelete(DeleteBehavior.Cascade)
             .IsRequired();
+        
+        Seeding.Seed(modelBuilder);
     }
 }
